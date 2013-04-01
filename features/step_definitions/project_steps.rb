@@ -36,3 +36,17 @@ end
 Then /^I should be told that the name is required$/ do
   page.should have_content("Name can't be blank")
 end
+
+Given /^there is a project called "([^\"]*)"$/ do |name|
+	FactoryGirl.create(:project, :name => name)
+end
+
+When(/^I follow "(.*?)"$/) do |arg1|
+  click_link 'TextMate 2'
+end
+
+Then(/^I should be on the project page for "(.*?)"$/) do |arg1|
+  current_path.should == project_path(Project.find_by_name!('TextMate 2'))
+end
+
+
